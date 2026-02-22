@@ -15,8 +15,12 @@ function createLibsqlDb() {
 function createSqliteDb() {
   const Database = require("better-sqlite3");
   const { drizzle } = require("drizzle-orm/better-sqlite3");
+  const fs = require("fs");
+  const path = require("path");
   const dbPath = process.env.DATABASE_PATH ?? "./data/cheapram.sqlite";
-  const sqlite = new Database(dbPath);
+  const dir = path.dirname(dbPath);
+  const usePath = dir !== "." && !fs.existsSync(dir) ? ":memory:" : dbPath;
+  const sqlite = new Database(usePath);
   return drizzle(sqlite, { schema });
 }
 
