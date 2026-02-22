@@ -56,6 +56,7 @@ export async function getRamListings(params: {
     retailerName: string;
     retailerDomain: string;
   };
+  try {
   const rows = (await db
     .select({
       productId: products.id,
@@ -119,6 +120,9 @@ export async function getRamListings(params: {
     });
   }
   return result;
+  } catch {
+    return [];
+  }
 }
 
 export async function getCheapestByCapacity(): Promise<
@@ -146,6 +150,7 @@ export async function getCheapestByCapacity(): Promise<
 }
 
 export async function getFiltersData(): Promise<FiltersData> {
+  try {
   const retailerList = await db
     .select({ id: retailers.id, name: retailers.name })
     .from(retailers)
@@ -165,4 +170,12 @@ export async function getFiltersData(): Promise<FiltersData> {
     ddrTypes: ["DDR4", "DDR5"],
     formFactors: ["DIMM", "SODIMM"],
   };
+  } catch {
+    return {
+      capacities: [],
+      retailers: [],
+      ddrTypes: ["DDR4", "DDR5"],
+      formFactors: ["DIMM", "SODIMM"],
+    };
+  }
 }

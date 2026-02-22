@@ -18,9 +18,13 @@ export async function getCouponsForRetailer(retailerId: number) {
 }
 
 export async function getCouponForProduct(productId: number) {
-  return db
-    .select()
-    .from(coupons)
-    .where(eq(coupons.productId, productId))
-    .get();
+  try {
+    return await db
+      .select()
+      .from(coupons)
+      .where(eq(coupons.productId, productId))
+      .get();
+  } catch {
+    return null;
+  }
 }

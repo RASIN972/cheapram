@@ -4,6 +4,7 @@ import { retailers, products } from "@/lib/db/schema";
 import { isNotNull } from "drizzle-orm";
 
 export async function GET() {
+  try {
   const retailerList = await db.select({ id: retailers.id, name: retailers.name }).from(retailers).all();
   const capacities = await db
     .selectDistinct({ capacityGb: products.capacityGb })
@@ -17,4 +18,12 @@ export async function GET() {
     ddrTypes: ["DDR4", "DDR5"],
     formFactors: ["DIMM", "SODIMM"],
   });
+  } catch {
+    return NextResponse.json({
+      capacities: [],
+      retailers: [],
+      ddrTypes: ["DDR4", "DDR5"],
+      formFactors: ["DIMM", "SODIMM"],
+    });
+  }
 }

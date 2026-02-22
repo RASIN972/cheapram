@@ -20,6 +20,7 @@ export type RamListingResponse = {
 };
 
 export async function GET(request: NextRequest) {
+  try {
   const { searchParams } = new URL(request.url);
   const capacity = searchParams.get("capacity");
   const ddrType = searchParams.get("type"); // ddr4 | ddr5
@@ -96,4 +97,7 @@ export async function GET(request: NextRequest) {
   }));
 
   return NextResponse.json(body);
+  } catch {
+    return NextResponse.json([]);
+  }
 }
