@@ -2,6 +2,8 @@ import Link from "next/link";
 import { AdSlot } from "@/components/AdSlot";
 import { getCheapestByCapacity } from "@/lib/data";
 
+export const dynamic = "force-dynamic";
+
 function formatPrice(cents: number): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",

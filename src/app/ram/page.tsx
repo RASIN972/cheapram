@@ -7,6 +7,8 @@ import {
   getRamListings,
 } from "@/lib/data";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "RAM Deals – Compare Prices",
   description:
